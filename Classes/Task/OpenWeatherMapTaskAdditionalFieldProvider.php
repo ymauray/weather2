@@ -341,9 +341,14 @@ size="30" placeholder="' . WeatherUtility::translate('placeholder.record_storage
         $countryRepository = $objectManager->get('SJBR\\StaticInfoTables\\Domain\\Repository\\CountryRepository');
         /** @var Country[] $countries */
         $countries = $countryRepository->findAll();
+	$c = [];
+	foreach ($countries as $country) {
+		$c[$country->getNameLocalized()] = $country;
+	}
+	ksort($c);
 
         $options = array();
-        foreach ($countries as $country) {
+        foreach ($c as $k=>$country) {
             $options[] = sprintf(
                 '<option%s value="%s">%s (%s)</option>',
                 // check 2 and 3 digit country code for compatibility reasons
